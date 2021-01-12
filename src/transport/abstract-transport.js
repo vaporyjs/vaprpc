@@ -110,9 +110,9 @@ AbstractTransport.prototype.initialConnect = function (callback) {
 };
 
 /**
- * Implemented by derived prototypes.  Should submit the given object to Ethereum.
+ * Implemented by derived prototypes.  Should submit the given object to Vapory.
  *
- * @param {!object} rpcJso - RPC Object to be sent to Ethereum.
+ * @param {!object} rpcJso - RPC Object to be sent to Vapory.
  * @param {!function(!Error):void} errorCallback - To be called if something goes wrong with the connection.  If the provided error has retryable = true property then the request will be re-queued and connection will be re-established.
  */
 AbstractTransport.prototype.submitRpcRequest = function (rpcJso, errorCallback) {

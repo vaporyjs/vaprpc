@@ -38,8 +38,8 @@ var packageRequest = function (payload) {
       }
     }
   }
-  if (tx.to) tx.to = speedomatic.formatEthereumAddress(tx.to);
-  if (tx.from) tx.from = speedomatic.formatEthereumAddress(tx.from);
+  if (tx.to) tx.to = speedomatic.formatVaporyAddress(tx.to);
+  if (tx.from) tx.from = speedomatic.formatVaporyAddress(tx.from);
   var packaged = {
     from: tx.from,
     to: tx.to,

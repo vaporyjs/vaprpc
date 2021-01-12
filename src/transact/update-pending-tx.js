@@ -1,7 +1,7 @@
 "use strict";
 
 var assign = require("lodash.assign");
-var eth = require("../wrappers/eth");
+var vap = require("../wrappers/vap");
 var updateMinedTx = require("../transact/update-mined-tx");
 var transact = require("../transact/transact");
 var isFunction = require("../utils/is-function");
@@ -14,7 +14,7 @@ function updatePendingTx(txHash) {
   return function (dispatch, getState) {
     var storedTransaction = getState().transactions[txHash];
     var onFailed = isFunction(storedTransaction.onFailed) ? storedTransaction.onFailed : logError;
-    dispatch(eth.getTransactionByHash(txHash, function (err, onChainTx) {
+    dispatch(vap.getTransactionByHash(txHash, function (err, onChainTx) {
       if (err) return onFailed(err);
       dispatch({
         type: "UPDATE_TRANSACTION",
@@ -64,7 +64,7 @@ function updatePendingTx(txHash) {
             });
             dispatch(updateMinedTx(txHash));
           } else {
-            dispatch(eth.blockNumber(null, function (err, blockNumber) {
+            dispatch(vap.blockNumber(null, function (err, blockNumber) {
               if (err) return onFailed(err);
               dispatch({ type: "SET_CURRENT_BLOCK", data: { number: blockNumber } });
               dispatch({

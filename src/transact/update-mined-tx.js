@@ -2,7 +2,7 @@
 
 var speedomatic = require("speedomatic");
 var BigNumber = require("bignumber.js");
-var eth = require("../wrappers/eth");
+var vap = require("../wrappers/vap");
 var isFunction = require("../utils/is-function");
 var logError = require("../utils/log-error");
 var errors = require("../errors/codes");
@@ -23,7 +23,7 @@ function updateMinedTx(txHash) {
     var onFailed = isFunction(transaction.onFailed) ? transaction.onFailed : logError;
     if (transaction.confirmations >= constants.REQUIRED_CONFIRMATIONS) {
       dispatch({ type: "TRANSACTION_CONFIRMED", hash: txHash });
-      dispatch(eth.getBlockByNumber([transaction.tx.blockNumber, false], function (err, block) {
+      dispatch(vap.getBlockByNumber([transaction.tx.blockNumber, false], function (err, block) {
         if (err) return onFailed(err);
         if (block == null) return onFailed(new RPCError(errors.BLOCK_NOT_FOUND));
         if (block.timestamp != null) {
@@ -38,8 +38,8 @@ function updateMinedTx(txHash) {
           hash: txHash,
           data: { tx: { callReturn: transaction.tx.callReturn } },
         });
-        dispatch(eth.getTransactionReceipt(txHash, function (err, receipt) {
-          if (debug.tx) console.log("[ethrpc] got receipt:", err, receipt);
+        dispatch(vap.getTransactionReceipt(txHash, function (err, receipt) {
+          if (debug.tx) console.log("[vaprpc] got receipt:", err, receipt);
           if (err) return onFailed(err);
           if (receipt == null) return onFailed(new RPCError(errors.TRANSACTION_RECEIPT_NOT_FOUND));
           if (receipt.gasUsed) {

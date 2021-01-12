@@ -1,6 +1,6 @@
 "use strict";
 
-var eth = require("../wrappers/eth");
+var vap = require("../wrappers/vap");
 var addNewHeadsSubscription = require("../subscriptions/add-new-heads-subscription");
 var removeSubscription = require("../subscriptions/remove-subscription");
 var logError = require("../utils/log-error");
@@ -12,16 +12,16 @@ function createTransportAdapter(transporter) {
   return function (dispatch) {
     return {
       getLatestBlock: function (callback) {
-        dispatch(eth.getBlockByNumber(["latest", false], callback));
+        dispatch(vap.getBlockByNumber(["latest", false], callback));
       },
       getBlockByHash: function (hash, callback) {
-        dispatch(eth.getBlockByHash([hash, false], callback));
+        dispatch(vap.getBlockByHash([hash, false], callback));
       },
       getBlockByNumber: function (blockNumber, callback) {
-        dispatch(eth.getBlockByNumber([blockNumber, false], callback));
+        dispatch(vap.getBlockByNumber([blockNumber, false], callback));
       },
       getLogs: function (filters, callback) {
-        dispatch(eth.getLogs(filters, callback));
+        dispatch(vap.getLogs(filters, callback));
       },
       subscribeToReconnects: function (onReconnect) {
         return transporter.addReconnectListener(onReconnect);
@@ -38,14 +38,14 @@ function createTransportAdapter(transporter) {
       subscribeToNewHeads: function (onNewHead, onSubscriptionError) {
         var token = (nextToken++).toString();
         subscriptionMapping[token] = null;
-        dispatch(eth.subscribe(["newHeads", {}], function (err, subscriptionID) {
+        dispatch(vap.subscribe(["newHeads", {}], function (err, subscriptionID) {
           if (err) return onSubscriptionError(err);
           if (!subscriptionID) return onSubscriptionError(subscriptionID);
 
           // if the caller already unsubscribed by the time this callback is
           // called, we need to unsubscribe from the remote
           if (subscriptionMapping[token] === undefined) {
-            dispatch(eth.unsubscribe(subscriptionID, logError));
+            dispatch(vap.unsubscribe(subscriptionID, logError));
           } else {
             subscriptionMapping[token] = subscriptionID;
             dispatch(addNewHeadsSubscription(subscriptionID, onNewHead));
@@ -58,7 +58,7 @@ function createTransportAdapter(transporter) {
           var subscriptionID = subscriptionMapping[token];
           delete subscriptionMapping[token];
           dispatch(removeSubscription(subscriptionID));
-          dispatch(eth.unsubscribe(subscriptionID, logError));
+          dispatch(vap.unsubscribe(subscriptionID, logError));
         }
       },
     };

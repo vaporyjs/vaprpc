@@ -1,6 +1,6 @@
 "use strict";
 
-var parseEthereumResponse = require("../decode-response/parse-ethereum-response");
+var parseVaporyResponse = require("../decode-response/parse-vapory-response");
 var isObject = require("../utils/is-object");
 var ErrorWithData = require("../errors").ErrorWithData;
 var ErrorWithCodeAndData = require("../errors").ErrorWithCodeAndData;
@@ -15,7 +15,7 @@ function blockchainMessageHandler(error, jso) {
     var outOfBandErrorHandler, subscriptionHandler, responseHandler, errorHandler, subscriptions, state = getState();
     subscriptions = state.subscriptions;
     outOfBandErrorHandler = internalState.get("outOfBandErrorHandler");
-    // if (state.debug.broadcast) console.log("[ethrpc] RPC response:", JSON.stringify(jso));
+    // if (state.debug.broadcast) console.log("[vaprpc] RPC response:", JSON.stringify(jso));
 
     if (error !== null) {
       return outOfBandErrorHandler(error);
@@ -26,14 +26,14 @@ function blockchainMessageHandler(error, jso) {
 
     subscriptionHandler = function () {
       var subscription;
-      if (jso.method !== "eth_subscription") {
-        return outOfBandErrorHandler(new ErrorWithData("Received an RPC request that wasn't an `eth_subscription`.", jso));
+      if (jso.method !== "vap_subscription") {
+        return outOfBandErrorHandler(new ErrorWithData("Received an RPC request that wasn't an `vap_subscription`.", jso));
       }
       if (typeof jso.params.subscription !== "string") {
-        return outOfBandErrorHandler(new ErrorWithData("Received an `eth_subscription` request without a subscription ID.", jso));
+        return outOfBandErrorHandler(new ErrorWithData("Received an `vap_subscription` request without a subscription ID.", jso));
       }
       if (jso.params.result === null || jso.params.result === undefined) {
-        return outOfBandErrorHandler(new ErrorWithData("Received an `eth_subscription` request without a result.", jso));
+        return outOfBandErrorHandler(new ErrorWithData("Received an `vap_subscription` request without a result.", jso));
       }
       subscription = subscriptions[jso.params.subscription];
       if (subscription != null) {
@@ -53,7 +53,7 @@ function blockchainMessageHandler(error, jso) {
       }
 
       // FIXME: outstandingRequest.callback should be function(Error,object) not function(Error|object)
-      parseEthereumResponse(jso, outstandingRequest.callback);
+      parseVaporyResponse(jso, outstandingRequest.callback);
     };
 
     errorHandler = function () {

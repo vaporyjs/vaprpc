@@ -2,7 +2,7 @@
 
 var assert = require("chai").assert;
 var os = require("os");
-var StubServer = require("ethereumjs-stub-rpc-server");
+var StubServer = require("vaporyjs-stub-rpc-server");
 var rpc = require("../src");
 
 function errorHandler(err) {
@@ -10,15 +10,15 @@ function errorHandler(err) {
 }
 
 module.exports.getIpcAddress = function () {
-  return process.env.ETHRPC_TEST_IPC_ADDRESS || ((os.type() === "Windows_NT") ? "\\\\.\\pipe\\TestRPC" : "testrpc.ipc");
+  return process.env.VAPRPC_TEST_IPC_ADDRESS || ((os.type() === "Windows_NT") ? "\\\\.\\pipe\\TestRPC" : "testrpc.ipc");
 };
 
 module.exports.getWsAddress = function () {
-  return process.env.ETHRPC_TEST_WS_ADDRESS || "ws://localhost:1337";
+  return process.env.VAPRPC_TEST_WS_ADDRESS || "ws://localhost:1337";
 };
 
 module.exports.getHttpAddress = function () {
-  return process.env.ETHRPC_TEST_HTTP_ADDRESS || "http://localhost:1337";
+  return process.env.VAPRPC_TEST_HTTP_ADDRESS || "http://localhost:1337";
 };
 
 module.exports.rpcConnect = function (transportType, transportAddress, callback) {
@@ -67,13 +67,13 @@ module.exports.createStubRpcServerWithRequiredResponders = function (transportTy
   var stubRpcServer = StubServer.createStubServer(transportType, transportAddress);
   stubRpcServer.addResponder(function (request) {
     switch (request.method) {
-      case "eth_coinbase":
+      case "vap_coinbase":
         return "0x0000000000000000000000000000000000000b0b";
-      case "eth_gasPrice":
+      case "vap_gasPrice":
         return "0x09184e72a000";
-      case "eth_subscribe":
+      case "vap_subscribe":
         return "0x00000000000000000000000000000001";
-      case "eth_unsubscribe":
+      case "vap_unsubscribe":
         return true;
     }
   });

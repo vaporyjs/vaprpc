@@ -26,7 +26,7 @@ describe("reducers/configuration", function () {
       action: {
         type: "SET_CONFIGURATION",
         configuration: {
-          httpAddresses: ["https://eth3.augur.net"],
+          httpAddresses: ["https://vap3.augur.net"],
           wsAddresses: ["wss://ws.augur.net"],
           ipcAddresses: [],
           blockRetention: 10,
@@ -34,7 +34,7 @@ describe("reducers/configuration", function () {
       },
       assertions: function (state) {
         assert.deepEqual(state, {
-          httpAddresses: ["https://eth3.augur.net"],
+          httpAddresses: ["https://vap3.augur.net"],
           wsAddresses: ["wss://ws.augur.net"],
           ipcAddresses: [],
           connectionTimeout: 3000,
@@ -58,7 +58,7 @@ describe("reducers/configuration", function () {
       action: {
         type: "SET_CONFIGURATION",
         configuration: {
-          httpAddresses: ["https://eth3.augur.net"],
+          httpAddresses: ["https://vap3.augur.net"],
           wsAddresses: ["wss://ws.augur.net"],
           ipcAddresses: [],
           blockRetention: 10,
@@ -67,7 +67,7 @@ describe("reducers/configuration", function () {
       },
       assertions: function (state) {
         assert.deepEqual(state, {
-          httpAddresses: ["https://eth3.augur.net"],
+          httpAddresses: ["https://vap3.augur.net"],
           wsAddresses: ["wss://ws.augur.net"],
           ipcAddresses: [],
           connectionTimeout: 3000,
@@ -82,7 +82,7 @@ describe("reducers/configuration", function () {
     test({
       description: "Reset configuration to initial state",
       state: {
-        httpAddresses: ["https://eth3.augur.net"],
+        httpAddresses: ["https://vap3.augur.net"],
         wsAddresses: ["wss://ws.augur.net"],
         ipcAddresses: [],
         connectionTimeout: 20000,

@@ -1,6 +1,6 @@
 "use strict";
 
-var eth = require("../wrappers/eth");
+var vap = require("../wrappers/vap");
 var packageRequest = require("../encode-request/package-request");
 var isObject = require("../utils/is-object");
 var errors = require("../errors/codes");
@@ -16,11 +16,11 @@ function callOrSendTransaction(payload, callback) {
     }
     if (getState().debug.broadcast) console.log("packaged:", packaged);
     if (payload.estimateGas) {
-      dispatch(eth.estimateGas(packaged, callback));
+      dispatch(vap.estimateGas(packaged, callback));
     } else if (payload.send) {
-      dispatch(eth.sendTransaction(packaged, callback));
+      dispatch(vap.sendTransaction(packaged, callback));
     } else {
-      dispatch(eth.call([packaged, "latest"], callback));
+      dispatch(vap.call([packaged, "latest"], callback));
     }
   };
 }

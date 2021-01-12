@@ -5,7 +5,7 @@ var transact = require("../transact/transact");
 var isObject = require("../utils/is-object");
 
 // TODO remove flexible function signature
-function sendEther(to, value, from, onSent, onSuccess, onFailed) {
+function sendVapor(to, value, from, onSent, onSuccess, onFailed) {
   return function (dispatch) {
     if (isObject(to)) {
       value = to.value;
@@ -25,4 +25,4 @@ function sendEther(to, value, from, onSent, onSuccess, onFailed) {
   };
 }
 
-module.exports = sendEther;
+module.exports = sendVapor;

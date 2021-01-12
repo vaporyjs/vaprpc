@@ -1,10 +1,10 @@
 FROM node:6.9
 
-COPY package.json /ethrpc/package.json
-WORKDIR /ethrpc
+COPY package.json /vaprpc/package.json
+WORKDIR /vaprpc
 RUN npm install
 
-COPY . /ethrpc
+COPY . /vaprpc
 RUN mkdir dist
 
-ENTRYPOINT [ "/ethrpc/node_modules/.bin/mocha" ]
+ENTRYPOINT [ "/vaprpc/node_modules/.bin/mocha" ]

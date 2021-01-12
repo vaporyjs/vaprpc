@@ -5,7 +5,7 @@
 var assert = require("chai").assert;
 var async = require("async");
 var os = require("os");
-var StubServer = require("ethereumjs-stub-rpc-server");
+var StubServer = require("vaporyjs-stub-rpc-server");
 var Transporter = require("../../src/transport/transporter");
 
 describe("transport/transporter", function () {
@@ -47,7 +47,7 @@ describe("transport/transporter", function () {
     var messageHandler = function (error, message) { assert.fail("expected no messages"); };
     new Transporter(configuration, messageHandler, false, function (error) {
       assert.typeOf(error, "Error");
-      assert.strictEqual(error.message, "Unable to connect to an Ethereum node via any transport. (Web3, HTTP, WS, IPC).");
+      assert.strictEqual(error.message, "Unable to connect to an Vapory node via any transport. (Web3, HTTP, WS, IPC).");
       done();
     });
   });
@@ -62,7 +62,7 @@ describe("transport/transporter", function () {
     var messageHandler = function (error, message) { assert.fail("expected no messages"); };
     new Transporter(configuration, messageHandler, false, function (error) {
       assert.typeOf(error, "Error");
-      assert.strictEqual(error.message, "Unable to connect to an Ethereum node via any transport. (Web3, HTTP, WS, IPC).");
+      assert.strictEqual(error.message, "Unable to connect to an Vapory node via any transport. (Web3, HTTP, WS, IPC).");
       done();
     });
   });

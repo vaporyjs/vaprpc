@@ -17,7 +17,7 @@ describe("raw-transactions/set-raw-transaction-nonce", function () {
             return nonce;
           };
         },
-        "../wrappers/eth": t.stub.eth,
+        "../wrappers/vap": t.stub.vap,
       });
       store.dispatch(setRawTransactionNonce(t.params.packaged, t.params.address, function (err, packaged) {
         t.assertions(err, packaged);
@@ -32,7 +32,7 @@ describe("raw-transactions/set-raw-transaction-nonce", function () {
       address: "0xb0b",
     },
     stub: {
-      eth: {
+      vap: {
         getTransactionCount: function (params, callback) {
           return function () {
             callback(null, "0xa");
@@ -46,13 +46,13 @@ describe("raw-transactions/set-raw-transaction-nonce", function () {
     },
   });
   test({
-    description: "Error from eth_getTransactionCount",
+    description: "Error from vap_getTransactionCount",
     params: {
       packaged: { nonce: 0 },
       address: "0xb0b",
     },
     stub: {
-      eth: {
+      vap: {
         getTransactionCount: function (params, callback) {
           return function () {
             callback(new RPCError({ code: -32000 }));

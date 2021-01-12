@@ -12,7 +12,7 @@ var errors = require("../errors/codes");
 /**
  * Package and sign a raw transaction.
  * @param {Object} payload Static API data with "params" and "from" set.
- * @param {string} address The sender's Ethereum address.
+ * @param {string} address The sender's Vapory address.
  * @param {buffer|function} privateKeyOrSigner Sender's plaintext private key or signing function.
  * @param {string} accountType One of "privateKey", "uPort", or "ledger".
  * @param {function} callback Callback function.
@@ -24,7 +24,7 @@ function packageAndSignRawTransaction(payload, address, privateKeyOrSigner, acco
     if (!isObject(payload)) return callback(new RPCError(errors.TRANSACTION_FAILED));
     if (address == null || privateKeyOrSigner == null) return callback(new RPCError(errors.NOT_LOGGED_IN));
     var packaged = packageRawTransaction(payload, address, state.networkID, state.currentBlock);
-    if (state.debug.broadcast) console.log("[ethrpc] packaged:", JSON.stringify(packaged, null, 2));
+    if (state.debug.broadcast) console.log("[vaprpc] packaged:", JSON.stringify(packaged, null, 2));
     dispatch(setRawTransactionGasPrice(packaged, function (err, packaged) {
       if (err) return callback(err);
       dispatch(setRawTransactionNonce(packaged, address, function (err, packaged) {

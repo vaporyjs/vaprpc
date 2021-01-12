@@ -16,7 +16,7 @@ describe("utils/sha3", function () {
     });
   };
   // Test vectors:
-  // https://github.com/ethereum/web3.js/blob/master/test/sha3.js
+  // https://github.com/vaporyco/web3.js/blob/master/test/sha3.js
   // https://github.com/cryptocoinjs/keccak/blob/master/test/vectors-keccak.js
   test({
     description: "Empty string [no encoding specified]",

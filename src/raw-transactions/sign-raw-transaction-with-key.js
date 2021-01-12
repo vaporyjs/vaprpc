@@ -1,7 +1,7 @@
 "use strict";
 
 var speedomatic = require("speedomatic");
-var Transaction = require("ethereumjs-tx");
+var Transaction = require("vaporyjs-tx");
 var RPCError = require("../errors/rpc-error");
 var errors = require("../errors/codes");
 

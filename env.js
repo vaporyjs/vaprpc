@@ -11,9 +11,9 @@ var configuration = {
 
 rpc.setDebugOptions({ connect: true });
 rpc.connect(configuration, function (err) {
-  if (err) return console.error("ethrpc connection failed:", err);
-  rpc.eth.coinbase(function (err, coinbase) {
-    if (err) return console.error("eth_coinbase failed");
+  if (err) return console.error("vaprpc connection failed:", err);
+  rpc.vap.coinbase(function (err, coinbase) {
+    if (err) return console.error("vap_coinbase failed");
     global.COINBASE = coinbase;
   });
   rpc.net.version(function (err, networkID) {

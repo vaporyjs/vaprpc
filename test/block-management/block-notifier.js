@@ -17,7 +17,7 @@ describe("block-management/block-notifier", function () {
     if (blockNotifier) blockNotifier.destroy();
   });
 
-  // disabled due to a bug in geth that requires us to fetch the block on subscription notification
+  // disabled due to a bug in gvap that requires us to fetch the block on subscription notification
   // it("uses subscriptions when available", function (done) {
   //   var pushing = false;
   //   blockNotifier = new BlockNotifier(mockTransport, 1);

@@ -1,14 +1,14 @@
 "use strict";
 
-var createEthrpc = require("./create-ethrpc");
+var createVaprpc = require("./create-vaprpc");
 var reducer = require("./reducers");
 var composeReducers = require("./reducers/compose-reducers");
 var version = require("./version");
 
-var ethrpc = createEthrpc(reducer);
-ethrpc.withCustomReducer = function (customReducer) {
-  return createEthrpc(composeReducers(customReducer, reducer));
+var vaprpc = createVaprpc(reducer);
+vaprpc.withCustomReducer = function (customReducer) {
+  return createVaprpc(composeReducers(customReducer, reducer));
 };
 
-ethrpc.lib_version = version;
-module.exports = ethrpc;
+vaprpc.lib_version = version;
+module.exports = vaprpc;

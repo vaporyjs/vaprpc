@@ -10,7 +10,7 @@ module.exports = {
     U_PORT: "uPort",
     LEDGER: "ledger",
     PRIVATE_KEY: "privateKey",
-    UNLOCKED_ETHEREUM_NODE: "unlockedEthereumNode",
+    UNLOCKED_VAPORY_NODE: "unlockedVaporyNode",
     META_MASK: "metaMask",
   },
 
@@ -31,6 +31,6 @@ module.exports = {
 
   DEFAULT_GAS: "0x2fd618",
 
-  ETHER: new BigNumber(10, 10).toPower(18),
+  VAPOR: new BigNumber(10, 10).toPower(18),
 
 };

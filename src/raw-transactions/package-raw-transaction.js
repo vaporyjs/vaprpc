@@ -7,7 +7,7 @@ var constants = require("../constants");
 /**
  * Package a raw transaction.
  * @param {Object} payload Static API data with "params" and "from" set.
- * @param {string} address The sender's Ethereum address.
+ * @param {string} address The sender's Vapory address.
  * @return {Object} Packaged transaction.
  */
 function packageRawTransaction(payload, address, networkID, currentBlock) {

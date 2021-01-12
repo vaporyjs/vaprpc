@@ -1,6 +1,6 @@
 "use strict";
 
-var eth_blockNumber = require("../wrappers/eth").blockNumber;
+var vap_blockNumber = require("../wrappers/vap").blockNumber;
 var miner = require("../wrappers/miner");
 var isFunction = require("../utils/is-function");
 var constants = require("../constants");
@@ -15,7 +15,7 @@ module.exports = function (blocks, mine, callback) {
     var startBlock, endBlock;
     function waitForNextBlocks(err) {
       if (err) return callback(err);
-      dispatch(eth_blockNumber(null, function (err, blockNumber) {
+      dispatch(vap_blockNumber(null, function (err, blockNumber) {
         if (err) return callback(err);
         if (blockNumber == null) return callback(new RPCError(errors.NO_RESPONSE));
         blockNumber = parseInt(blockNumber, 16);

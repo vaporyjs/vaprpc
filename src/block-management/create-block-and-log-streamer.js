@@ -1,7 +1,7 @@
 "use strict";
 
 var Promise = require("es6-promise").Promise;
-var BlockAndLogStreamer = require("ethereumjs-blockstream").BlockAndLogStreamer;
+var BlockAndLogStreamer = require("vaporyjs-blockstream").BlockAndLogStreamer;
 var BlockNotifier = require("../block-management/block-notifier");
 var internalState = require("../internal-state");
 var isFunction = require("../utils/is-function");
@@ -15,7 +15,7 @@ function subscribeToBlockNotifier(blockNotifier, blockAndLogStreamer) {
 }
 
 /**
- * Used internally.  Instantiates a new BlockAndLogStreamer backed by ethrpc and BlockNotifier.
+ * Used internally.  Instantiates a new BlockAndLogStreamer backed by vaprpc and BlockNotifier.
  *
  * @typedef Block
  * @type object

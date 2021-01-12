@@ -24,8 +24,8 @@ describe("raw-transactions/sign-raw-transaction-with-key", function () {
     description: "Sign packaged raw transaction",
     params: {
       packaged: {
-        from: speedomatic.formatEthereumAddress("0xb0b"),
-        to: speedomatic.formatEthereumAddress("0xd00d"),
+        from: speedomatic.formatVaporyAddress("0xb0b"),
+        to: speedomatic.formatVaporyAddress("0xd00d"),
         data: "0x772a646f0000000000000000000000000000000000000000000000000000000000018a9200000000000000000000000000000000000000000000000000000000000000a1",
         gas: "0x2fd618",
         nonce: 0,
@@ -43,8 +43,8 @@ describe("raw-transactions/sign-raw-transaction-with-key", function () {
     description: "Packaged raw transaction with insufficient gas",
     params: {
       packaged: {
-        from: speedomatic.formatEthereumAddress("0xb0b"),
-        to: speedomatic.formatEthereumAddress("0xd00d"),
+        from: speedomatic.formatVaporyAddress("0xb0b"),
+        to: speedomatic.formatVaporyAddress("0xd00d"),
         data: "0x772a646f0000000000000000000000000000000000000000000000000000000000018a9200000000000000000000000000000000000000000000000000000000000000a1",
         gas: "0x1",
         nonce: 0,

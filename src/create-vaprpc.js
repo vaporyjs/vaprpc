@@ -23,13 +23,13 @@ var callContractFunction = require("./transact/call-contract-function");
 var transact = require("./transact/transact");
 
 var raw = require("./wrappers/raw");
-var eth = require("./wrappers/eth");
+var vap = require("./wrappers/vap");
 var net_ = require("./wrappers/net");
 var web3 = require("./wrappers/web3");
 var personal = require("./wrappers/personal");
 var shh = require("./wrappers/shh");
 var miner = require("./wrappers/miner");
-var sendEther = require("./wrappers/send-ether");
+var sendVapor = require("./wrappers/send-vapor");
 var publish = require("./wrappers/publish");
 var bindDispatch = require("./wrappers/bind-dispatch");
 var isUnlocked = require("./wrappers/is-unlocked");
@@ -47,7 +47,7 @@ var startBlockStream = require("./start-block-stream.js");
 var internalState = require("./internal-state");
 var constants = require("./constants");
 
-var createEthrpc = function (reducer) {
+var createVaprpc = function (reducer) {
   var store = createStore(reducer, thunkSubscribeEnhancer);
   var dispatch = store.dispatch;
   return {
@@ -81,12 +81,12 @@ var createEthrpc = function (reducer) {
     includeInTransactionRelay: function (method) { return dispatch(includeInTransactionRelay(method)); },
 
     /******************************
-     * Ethereum JSON-RPC bindings *
+     * Vapory JSON-RPC bindings *
      ******************************/
 
     raw: function (cmd, params, callback) { return dispatch(raw(cmd, params, callback)); },
 
-    eth: bindDispatch(dispatch, eth),
+    vap: bindDispatch(dispatch, vap),
     net: bindDispatch(dispatch, net_),
     web3: bindDispatch(dispatch, web3),
     shh: bindDispatch(dispatch, shh),
@@ -103,76 +103,76 @@ var createEthrpc = function (reducer) {
     version: function (callback) { return dispatch(net_.version(null, callback)); },
     netVersion: function (callback) { return this.version(callback); },
 
-    // eth_
-    accounts: function (callback) { return dispatch(eth.accounts(null, callback)); },
-    blockNumber: function (callback) { return dispatch(eth.blockNumber(null, callback)); },
+    // vap_
+    accounts: function (callback) { return dispatch(vap.accounts(null, callback)); },
+    blockNumber: function (callback) { return dispatch(vap.blockNumber(null, callback)); },
     call: function (transaction, blockNumber, callback) {
       if (isFunction(blockNumber)) {
         callback = blockNumber;
         blockNumber = null;
       }
-      return dispatch(eth.call([transaction, validateAndDefaultBlockNumber(blockNumber)], callback));
+      return dispatch(vap.call([transaction, validateAndDefaultBlockNumber(blockNumber)], callback));
     },
-    coinbase: function (callback) { return dispatch(eth.coinbase(null, callback)); },
+    coinbase: function (callback) { return dispatch(vap.coinbase(null, callback)); },
     // note: compileLLL, compileSerpent, and compileSolidity intentionally left out
     estimateGas: function (transaction, blockNumber, callback) {
       if (isFunction(blockNumber)) {
         callback = blockNumber;
         blockNumber = null;
       }
-      return dispatch(eth.estimateGas([transaction, validateAndDefaultBlockNumber(blockNumber)], callback));
+      return dispatch(vap.estimateGas([transaction, validateAndDefaultBlockNumber(blockNumber)], callback));
     },
-    gasPrice: function (callback) { return dispatch(eth.gasPrice(null, callback)); },
+    gasPrice: function (callback) { return dispatch(vap.gasPrice(null, callback)); },
     getBalance: function (address, blockNumber, callback) {
       if (isFunction(blockNumber)) {
         callback = blockNumber;
         blockNumber = null;
       }
-      return dispatch(eth.getBalance([address, validateAndDefaultBlockNumber(blockNumber)], callback));
+      return dispatch(vap.getBalance([address, validateAndDefaultBlockNumber(blockNumber)], callback));
     },
     balance: function (address, blockNumber, callback) {
       return this.getBalance(address, blockNumber, callback);
     },
     getBlockByHash: function (hash, shouldReturnFullTransactions, callback) {
       if (shouldReturnFullTransactions === undefined) shouldReturnFullTransactions = true;
-      return dispatch(eth.getBlockByHash([hash, Boolean(shouldReturnFullTransactions)], callback));
+      return dispatch(vap.getBlockByHash([hash, Boolean(shouldReturnFullTransactions)], callback));
     },
     getBlockByNumber: function (number, shouldReturnFullTransactions, callback) {
       if (shouldReturnFullTransactions !== true) shouldReturnFullTransactions = false;
-      return dispatch(eth.getBlockByNumber([validateAndDefaultBlockNumber(number), Boolean(shouldReturnFullTransactions)], callback));
+      return dispatch(vap.getBlockByNumber([validateAndDefaultBlockNumber(number), Boolean(shouldReturnFullTransactions)], callback));
     },
     getBlock: function (number, shouldReturnFullTransactions, callback) { return this.getBlockByNumber(number, shouldReturnFullTransactions, callback); },
-    getCode: function (address, blockNumber, callback) { return dispatch(eth.getCode([address, validateAndDefaultBlockNumber(blockNumber)], callback)); },
-    getFilterChanges: function (filter, callback) { return dispatch(eth.getFilterChanges([filter], callback)); },
-    getFilterLogs: function (filter, callback) { return dispatch(eth.getFilterLogs(filter, callback)); },
-    getLogs: function (filter, callback) { return dispatch(eth.getLogs(filter, callback)); },
+    getCode: function (address, blockNumber, callback) { return dispatch(vap.getCode([address, validateAndDefaultBlockNumber(blockNumber)], callback)); },
+    getFilterChanges: function (filter, callback) { return dispatch(vap.getFilterChanges([filter], callback)); },
+    getFilterLogs: function (filter, callback) { return dispatch(vap.getFilterLogs(filter, callback)); },
+    getLogs: function (filter, callback) { return dispatch(vap.getLogs(filter, callback)); },
     // TODO: add map lookup support (at the moment, this function doesn't support
     // map lookups due to rounding errors after 51-bits for JS numbers)
-    getStorageAt: function (address, position, blockNumber, callback) { return dispatch(eth.getStorageAt([address, position, validateAndDefaultBlockNumber(blockNumber)], callback)); },
-    getTransactionByHash: function (transactionHash, callback) { return dispatch(eth.getTransactionByHash([transactionHash], callback)); },
+    getStorageAt: function (address, position, blockNumber, callback) { return dispatch(vap.getStorageAt([address, position, validateAndDefaultBlockNumber(blockNumber)], callback)); },
+    getTransactionByHash: function (transactionHash, callback) { return dispatch(vap.getTransactionByHash([transactionHash], callback)); },
     getTransaction: function (transactionHash, callback) { return this.getTransactionByHash(transactionHash, callback); },
-    getTransactionCount: function (address, callback) { return dispatch(eth.getTransactionCount([address, "latest"], callback)); },
-    getPendingTransactionCount: function (address, callback) { return dispatch(eth.getTransactionCount([address, "pending"], callback)); },
-    getTransactionReceipt: function (transactionHash, callback) { return dispatch(eth.getTransactionReceipt(transactionHash, callback)); },
-    getUncleByBlockHashAndIndex: function (blockHash, index, callback) { return dispatch(eth.getUncleByBlockHashAndIndex([blockHash, index], callback)); },
-    getUncleByBlockNumberAndIndex: function (blockNumber, index, callback) { return dispatch(eth.getUncleByBlockNumberAndIndex([validateAndDefaultBlockNumber(blockNumber), index], callback)); },
+    getTransactionCount: function (address, callback) { return dispatch(vap.getTransactionCount([address, "latest"], callback)); },
+    getPendingTransactionCount: function (address, callback) { return dispatch(vap.getTransactionCount([address, "pending"], callback)); },
+    getTransactionReceipt: function (transactionHash, callback) { return dispatch(vap.getTransactionReceipt(transactionHash, callback)); },
+    getUncleByBlockHashAndIndex: function (blockHash, index, callback) { return dispatch(vap.getUncleByBlockHashAndIndex([blockHash, index], callback)); },
+    getUncleByBlockNumberAndIndex: function (blockNumber, index, callback) { return dispatch(vap.getUncleByBlockNumberAndIndex([validateAndDefaultBlockNumber(blockNumber), index], callback)); },
     getUncle: function (blockNumber, index, callback) { return this.getUncleByBlockNumberAndIndex(blockNumber, index, callback); },
-    getUncleCountByBlockHash: function (blockHash, callback) { return dispatch(eth.getUncleCountByBlockHash([blockHash], callback)); },
-    getUncleCountByBlockNumber: function (blockNumber, callback) { return dispatch(eth.getUncleCountByBlockNumber([validateAndDefaultBlockNumber(blockNumber)], callback)); },
+    getUncleCountByBlockHash: function (blockHash, callback) { return dispatch(vap.getUncleCountByBlockHash([blockHash], callback)); },
+    getUncleCountByBlockNumber: function (blockNumber, callback) { return dispatch(vap.getUncleCountByBlockNumber([validateAndDefaultBlockNumber(blockNumber)], callback)); },
     getUncleCount: function (blockNumber, callback) { return this.getUncleCountByBlockNumber(blockNumber, callback); },
-    hashrate: function (callback) { return dispatch(eth.hashrate(null, callback)); },
-    mining: function (callback) { return dispatch(eth.mining(null, callback)); },
-    newBlockFilter: function (callback) { return dispatch(eth.newBlockFilter(null, callback)); },
+    hashrate: function (callback) { return dispatch(vap.hashrate(null, callback)); },
+    mining: function (callback) { return dispatch(vap.mining(null, callback)); },
+    newBlockFilter: function (callback) { return dispatch(vap.newBlockFilter(null, callback)); },
     /**
      * @param {{fromBlock:number|string, toBlock:number|string, address:string, topics:string[], limit:number}} filterOptions
      */
     newFilter: function (filterOptions, callback) {
       filterOptions.fromBlock = validateAndDefaultBlockNumber(filterOptions.fromBlock);
       filterOptions.toBlock = validateAndDefaultBlockNumber(filterOptions.toBlock);
-      return dispatch(eth.newFilter(filterOptions, callback));
+      return dispatch(vap.newFilter(filterOptions, callback));
     },
-    newPendingTransactionFilter: function (callback) { return dispatch(eth.newPendingTransactionFilter(null, callback)); },
-    protocolVersion: function (callback) { return dispatch(eth.protocolVersion(null, callback)); },
+    newPendingTransactionFilter: function (callback) { return dispatch(vap.newPendingTransactionFilter(null, callback)); },
+    protocolVersion: function (callback) { return dispatch(vap.protocolVersion(null, callback)); },
     /**
      * @param {string} signedTransaction - RLP encoded transaction signed with private key
      */
@@ -184,32 +184,32 @@ var createEthrpc = function (reducer) {
       if (!/^0x[0-9a-fA-F]*$/.test(signedTransaction)) {
         throw new Error("signedTransaction must be RLP encoded hex byte array encoded into a string");
       }
-      return dispatch(eth.sendRawTransaction([signedTransaction], callback));
+      return dispatch(vap.sendRawTransaction([signedTransaction], callback));
     },
     /**
      * @param {{from:string, to:string, gas:number, gasPrice:number, value:number, data:string, nonce:number}} transaction
      */
     sendTransaction: function (transaction, callback) {
       validateTransaction(transaction);
-      return dispatch(eth.sendTransaction([transaction], callback));
+      return dispatch(vap.sendTransaction([transaction], callback));
     },
-    sign: function (address, data, callback) { return dispatch(eth.sign([address, data], callback)); },
+    sign: function (address, data, callback) { return dispatch(vap.sign([address, data], callback)); },
     signTransaction: function (transaction, callback) {
       validateTransaction(transaction);
-      return dispatch(eth.signTransaction([transaction], callback));
+      return dispatch(vap.signTransaction([transaction], callback));
     },
     subscribe: function (label, options, callback) {
       if (options === undefined) options = {};
       if (options === null) options = {};
       if (typeof options !== "object") throw new Error("options must be an object");
-      return dispatch(eth.subscribe([label, options], callback));
+      return dispatch(vap.subscribe([label, options], callback));
     },
     subscribeLogs: function (options, callback) { return this.subscribe("logs", options, callback); },
     subscribeNewHeads: function (callback) { return this.subscribe("newHeads", null, callback); },
     subscribeNewPendingTransactions: function (callback) { return this.subscribe("newPendingTransactions", null, callback); },
-    syncing: function (callback) { return dispatch(eth.syncing(null, callback)); },
-    uninstallFilter: function (filter, callback) { return dispatch(eth.uninstallFilter([filter], callback)); },
-    unsubscribe: function (label, callback) { return dispatch(eth.unsubscribe([label], callback)); },
+    syncing: function (callback) { return dispatch(vap.syncing(null, callback)); },
+    uninstallFilter: function (filter, callback) { return dispatch(vap.uninstallFilter([filter], callback)); },
+    unsubscribe: function (label, callback) { return dispatch(vap.unsubscribe([label], callback)); },
 
     WsTransport: require("./transport/ws-transport"),
 
@@ -229,7 +229,7 @@ var createEthrpc = function (reducer) {
     },
 
     handleRPCError: handleRPCError,
-    sendEther: function (to, value, from, onSent, onSuccess, onFailed) { return dispatch(sendEther(to, value, from, onSent, onSuccess, onFailed)); },
+    sendVapor: function (to, value, from, onSent, onSuccess, onFailed) { return dispatch(sendVapor(to, value, from, onSent, onSuccess, onFailed)); },
     publish: function (compiled, callback) { return dispatch(publish(compiled, callback)); },
     ensureLatestBlock: function (callback) { return dispatch(ensureLatestBlock(callback)); },
     isUnlocked: function (account, callback) { return dispatch(isUnlocked(account, callback)); },
@@ -243,4 +243,4 @@ var createEthrpc = function (reducer) {
   };
 };
 
-module.exports = createEthrpc;
+module.exports = createVaprpc;

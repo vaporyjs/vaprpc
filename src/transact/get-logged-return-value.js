@@ -1,13 +1,13 @@
 "use strict";
 
 var BigNumber = require("bignumber.js");
-var eth_getTransactionReceipt = require("../wrappers/eth").getTransactionReceipt;
+var vap_getTransactionReceipt = require("../wrappers/vap").getTransactionReceipt;
 var errors = require("../errors/codes");
 var RPCError = require("../errors/rpc-error");
 
 function getLoggedReturnValue(txHash, callback) {
   return function (dispatch, getState) {
-    dispatch(eth_getTransactionReceipt(txHash, function (err, receipt) {
+    dispatch(vap_getTransactionReceipt(txHash, function (err, receipt) {
       if (getState().debug.tx) console.log("got receipt:", receipt);
       if (err) return callback(err);
       if (!receipt || !Array.isArray(receipt.logs) || !receipt.logs.length) return callback(new RPCError(errors.NULL_CALL_RETURN));

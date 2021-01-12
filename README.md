@@ -1,21 +1,21 @@
-# ethrpc
+# vaprpc
 
-[![Build Status](https://travis-ci.org/ethereumjs/ethrpc.svg)](https://travis-ci.org/ethereumjs/ethrpc) [![Coverage Status](https://coveralls.io/repos/ethereumjs/ethrpc/badge.svg?branch=master&service=github)](https://coveralls.io/github/ethereumjs/ethrpc?branch=master) [![npm version](https://badge.fury.io/js/ethrpc.svg)](http://badge.fury.io/js/ethrpc)
+[![Build Status](https://travis-ci.org/vaporyjs/vaprpc.svg)](https://travis-ci.org/vaporyjs/vaprpc) [![Coverage Status](https://coveralls.io/repos/vaporyjs/vaprpc/badge.svg?branch=master&service=github)](https://coveralls.io/github/vaporyjs/vaprpc?branch=master) [![npm version](https://badge.fury.io/js/vaprpc.svg)](http://badge.fury.io/js/vaprpc)
 
-JavaScript RPC communication with the Ethereum network.
+JavaScript RPC communication with the Vapory network.
 
 ## Usage
 
-ethrpc can be installed using npm:
+vaprpc can be installed using npm:
 
 ```
-npm install ethrpc
+npm install vaprpc
 ```
 
 After installing, to use it with Node, require it and call connect:
 
 ```javascript
-var rpc = require("ethrpc");
+var rpc = require("vaprpc");
 var connectionConfiguration = {
   httpAddresses: ["http://localhost:8545"], // optional, default empty array
   wsAddresses: [], // optional, default empty array
@@ -26,42 +26,42 @@ var connectionConfiguration = {
 };
 rpc.connect(connectionConfiguration, function (err) {
   if (err) {
-    console.error("Failed to connect to Ethereum node.");
+    console.error("Failed to connect to Vapory node.");
   } else {
-    console.log("Connected to Ethereum node!");
+    console.log("Connected to Vapory node!");
   }
 });
 ```
 
-A minified, browserified file `dist/ethrpc.min.js` is included for use in the browser.  Including this file simply attaches an `ethrpc` object to `window`:
+A minified, browserified file `dist/vaprpc.min.js` is included for use in the browser.  Including this file simply attaches an `vaprpc` object to `window`:
 
 ```html
-<script src="dist/ethrpc.min.js" type="text/javascript"></script>
+<script src="dist/vaprpc.min.js" type="text/javascript"></script>
 ```
 
 ### Basic RPC
 
-The `raw` method allows you to send in commands that won't be parsed/mangled by ethrpc.  (Similar to sending RPC requests with cURL.)
+The `raw` method allows you to send in commands that won't be parsed/mangled by vaprpc.  (Similar to sending RPC requests with cURL.)
 
 ```javascript
 rpc.raw("net_peerCount");
 "0x10"
 ```
 
-Almost all commands listed in the [Ethereum JSON RPC](https://github.com/ethereum/wiki/wiki/JSON-RPC) wiki page have named wrappers:
+Almost all commands listed in the [Vapory JSON RPC](https://github.com/vaporyco/wiki/wiki/JSON-RPC) wiki page have named wrappers:
 
 
 ```javascript
 rpc.net.peerCount();
 "0x10"
 
-rpc.eth.blockNumber();
+rpc.vap.blockNumber();
 "0x35041"
 ```
 
 ### Block and Log Notifications
 
-If you want to subscribe to new blocks or new logs you can get access to a [block and log streamer](https://github.com/ethereumjs/ethereumjs-blockstream) via:
+If you want to subscribe to new blocks or new logs you can get access to a [block and log streamer](https://github.com/vaporyjs/vaporyjs-blockstream) via:
 
 ```javascript
 var blockStream = rpc.getBlockStream();
@@ -97,15 +97,15 @@ var txHash = rpc.publish("0x603980600b6000396044567c0100000000000000000000000000
 "0x6a532c807eb49d78bf0fb7962743c7f155a4b2fc1258b749df85c88b66fc3316"
 
 // To get the contract's address, after the transaction is sealed (mined), get its receipt:
-var address = rpc.eth.getTransactionReceipt(txHash).contractAddress;
+var address = rpc.vap.getTransactionReceipt(txHash).contractAddress;
 // address:
 "0x86fb6d1f1bd78cc13c6354b6436b6ea0c144de2e"
 ```
 
-`getCode` downloads code from a contract already on the Ethereum network:
+`getCode` downloads code from a contract already on the Vapory network:
 
 ```javascript
-var contractCode = rpc.eth.getCode("0x86fb6d1f1bd78cc13c6354b6436b6ea0c144de2e");
+var contractCode = rpc.vap.getCode("0x86fb6d1f1bd78cc13c6354b6436b6ea0c144de2e");
 // contractCode:
 "0x7c010000000000000000000000000000000000000000000000000000000060003504636ffa1caa81141560415760043560405260026040510260605260206060f35b50"
 ```
@@ -148,7 +148,7 @@ The `params` and `signature` fields are required if your function accepts parame
 
 ## Tests
 
-Unit tests are included in `test/ethrpc.js`, and can be run using npm:
+Unit tests are included in `test/vaprpc.js`, and can be run using npm:
 
 ```
 npm test
@@ -157,7 +157,7 @@ npm test
 Alternatively, you can run the tests inside of a docker container.  Docker layer caching is leveraged to make it so the build is very fast after the first time (unless you change dependencies):
 
 ```
-docker build -t ethrpc . && docker run --rm ethrpc
+docker build -t vaprpc . && docker run --rm vaprpc
 ```
 
 ## Internal Architecture

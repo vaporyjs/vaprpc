@@ -25,7 +25,7 @@
   },
   "NULL_RESPONSE": {
     "error": 407,
-    "message": "expected transaction hash from Ethereum node, received null"
+    "message": "expected transaction hash from Vapory node, received null"
   },
   "NO_RESPONSE": {
     "error": 408,
