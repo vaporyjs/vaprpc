@@ -1,6 +1,6 @@
 "use strict";
 
-var speedomatic = require("speedomatic");
+var speedomatic = require("@volut/speedomatic");
 var clone = require("clone");
 var vap = require("../wrappers/vap");
 var signRawTransactionWithKey = require("../raw-transactions/sign-raw-transaction-with-key");

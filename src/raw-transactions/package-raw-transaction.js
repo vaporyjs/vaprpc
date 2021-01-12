@@ -1,6 +1,6 @@
 "use strict";
 
-var speedomatic = require("speedomatic");
+var speedomatic = require("@volut/speedomatic");
 var packageRequest = require("../encode-request/package-request");
 var constants = require("../constants");
 

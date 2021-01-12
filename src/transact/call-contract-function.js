@@ -1,7 +1,7 @@
 "use strict";
 
 var assign = require("lodash.assign");
-var speedomatic = require("speedomatic");
+var speedomatic = require("@volut/speedomatic");
 var callOrSendTransaction = require("../transact/call-or-send-transaction");
 var handleRPCError = require("../decode-response/handle-rpc-error");
 

@@ -1,6 +1,6 @@
 "use strict";
 
-var speedomatic = require("speedomatic");
+var speedomatic = require("@volut/speedomatic");
 var immutableDelete = require("immutable-delete");
 var packageAndSubmitRawTransaction = require("../raw-transactions/package-and-submit-raw-transaction");
 var callOrSendTransaction = require("../transact/call-or-send-transaction");

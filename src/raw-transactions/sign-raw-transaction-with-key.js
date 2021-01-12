@@ -1,6 +1,6 @@
 "use strict";
 
-var speedomatic = require("speedomatic");
+var speedomatic = require("@volut/speedomatic");
 var Transaction = require("vaporyjs-tx");
 var RPCError = require("../errors/rpc-error");
 var errors = require("../errors/codes");

@@ -1,6 +1,6 @@
 "use strict";
 
-var speedomatic = require("speedomatic");
+var speedomatic = require("@volut/speedomatic");
 var createKeccakHash = require("keccak/js");
 var isFunction = require("../utils/is-function");
 

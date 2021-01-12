@@ -1,6 +1,6 @@
 "use strict";
 
-var speedomatic = require("speedomatic");
+var speedomatic = require("@volut/speedomatic");
 var vap_coinbase = require("./vap").coinbase;
 
 function setCoinbase(callback) {

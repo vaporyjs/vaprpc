@@ -3,7 +3,7 @@
 "use strict";
 
 var assert = require("chai").assert;
-var speedomatic = require("speedomatic");
+var speedomatic = require("@volut/speedomatic");
 var errors = require("../../src/errors/codes");
 var RPCError = require("../../src/errors/rpc-error");
 var signRawTransactionWithKey = require("../../src/raw-transactions/sign-raw-transaction-with-key");

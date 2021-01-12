@@ -10,7 +10,7 @@
     "test": "mocha test/*.js test/block-management test/raw-transactions test/reducers test/transport test/utils",
     "lint": "eslint src test/*.js test/block-management test/raw-transactions test/reducers test/transport test/utils",
     "coverage": "istanbul cover --include-all-sources --root ./src ./node_modules/mocha/bin/_mocha test/",
-    "link": "npm link speedomatic vaporyjs-blockstream",
+    "link": "npm link @volut/speedomatic vaporyjs-blockstream",
     "genversion": "genversion src/version.js",
     "build": "mkdirp dist && browserify ./exports.js -o ./dist/vaprpc.js && uglifyjs ./dist/vaprpc.js -o ./dist/vaprpc.min.js",
     "build:tests": "browserify ./test/reducers/*.js -o ./test/browser/bundle.js",
@@ -45,7 +45,7 @@
     "postinstall-build": "5.0.1",
     "redux": "3.6.0",
     "redux-thunk-subscribe": "1.0.3",
-    "speedomatic": "2.1.2",
+    "@volut/speedomatic": "2.1.5",
     "uuid": "3.0.1"
   },
   "devDependencies": {
@@ -58,11 +58,11 @@
     "babel-preset-stage-0": "6.16.0",
     "babelify": "7.2.0",
     "browserify": "11.0.1",
-    "bufferutil": "3.0.0",
+    "bufferutil": "4.0.3",
     "chai": "3.5.0",
     "coveralls": "2.11.3",
     "eslint": "3.17.1",
-    "vaporyjs-abi": "0.6.5",
+    "vaporyjs-abi": "0.6.6",
     "vaporyjs-stub-rpc-server": "2.1.6",
     "genversion": "2.0.1",
     "istanbul": "0.4.5",
@@ -71,7 +71,7 @@
     "proxyquire": "1.7.11",
     "redux-thunk": "2.2.0",
     "uglify-js": "2.6.1",
-    "utf-8-validate": "3.0.1",
+    "utf-8-validate": "5.0.4",
     "ws": "2.0.3"
   },
   "optionalDependencies": {

@@ -1,6 +1,6 @@
 "use strict";
 
-var speedomatic = require("speedomatic");
+var speedomatic = require("@volut/speedomatic");
 var BigNumber = require("bignumber.js");
 var vap = require("../wrappers/vap");
 var isFunction = require("../utils/is-function");

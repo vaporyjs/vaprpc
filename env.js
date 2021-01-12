@@ -1,4 +1,4 @@
-global.speedomatic = require("speedomatic");
+global.speedomatic = require("@volut/speedomatic");
 global.rpc = require("./src");
 global.log = console.log;
 

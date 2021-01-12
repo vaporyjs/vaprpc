@@ -1,6 +1,6 @@
 "use strict";
 
-var speedomatic = require("speedomatic");
+var speedomatic = require("@volut/speedomatic");
 var transact = require("../transact/transact");
 var isObject = require("../utils/is-object");
 
